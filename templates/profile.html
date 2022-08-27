@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+
+{% block title %}
+  QuizWiz | User
+{% endblock %}
+
+{% block body %}
+<script>
+
+</script>
+<div style="font-size: 50px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif" id="profileData">
+   Welcome 
+</div>
+
+
+<script>
+  var div = document.getElementById('profileData')
+  div.innerHTML = "Welcome " +sessionStorage.getItem("Name");
+</script>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  
+
+  .heading {
+    font-size: 25px;
+    margin-right: 25px;
+  }
+  
+  .fa {
+    font-size: 25px;
+  }
+  
+  .checked {
+    color: orange;
+  }
+  
+  /* Three column layout */
+  .side {
+    float: left;
+    width: 15%;
+    margin-top:10px;
+  }
+  
+  .middle {
+    margin-top:10px;
+    float: left;
+    width: 70%;
+  }
+  
+  /* Place text to the right */
+  .right {
+    text-align: right;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* The bar container */
+  .bar-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    color: white;
+  }
+  
+  /* Individual bars */
+  .bar-5 {width: 60%; height: 18px; background-color: #04AA6D;}
+  .bar-4 {width: 30%; height: 18px; background-color: #2196F3;}
+  .bar-3 {width: 10%; height: 18px; background-color: #00bcd4;}
+  .bar-2 {width: 4%; height: 18px; background-color: #ff9800;}
+  .bar-1 {width: 15%; height: 18px; background-color: #f44336;}
+  
+  /* Responsive layout - make the columns stack on top of each other instead of next to each other */
+  @media (max-width: 400px) {
+    .side, .middle {
+      width: 100%;
+    }
+    .right {
+      display: none;
+    }
+  }
+  </style>
+
+
+<hr>
+<a href="#" data-widget="control-sidebar">Toggle Control Sidebar</a>
+
+<span class="heading">Average Stars</span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star"></span>
+<p>4.1 average based on 254 Quizes.</p>
+<hr style="border:3px solid #f1f1f1">
+
+
+<div class="container-fluid py-2" style = "overflow-x: auto;">
+  <h2 class="font-weight-light">Quiz from your followers</h2>
+  <div class="d-flex flex-row flex-nowrap">
+    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 1</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 2</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 3</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 4</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>
+    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 5</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>
+
+    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 6</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div><div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 7</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div><div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 8</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div><div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 9</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div><div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 10</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid py-2" style = "overflow-x: auto;">
+  <h2 class="font-weight-light">Top Quizes ⭐</h2>
+  <div class="d-flex flex-row flex-nowrap">
+    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 1</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 2</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 3</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 4</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>
+    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 5</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>
+
+    <div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 6</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div><div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 7</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div><div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 8</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div><div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 9</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div><div class="card" style="min-width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Quiz 10</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Solve Quiz</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block navbar%}
+<li class="nav-item">
+  <a href="/profile" class="nav-link">
+    <p>
+      Profile
+    </p>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="/add" class="nav-link">
+    <p>
+      Make Quiz
+    </p>
+  </a>
+</li>
+<li class="nav-item">
+    <a href="/quizstrt" class="nav-link">
+<!--<i class="nav-icon fas fa-tachometer-alt"></i> -->
+      <p>
+        Take Quiz
+      </p>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a href="/show" class="nav-link">
+      <p>
+        Check Results
+      </p>
+    </a>
+  </li>
+<li class="nav-item">
+  <a href="/" class="nav-link" onclick="signOut();">
+      <p>
+        Logout
+      </p>
+    </a>
+  </li>
+  <div class="g_id_signout">Sign Out</div>
+{% endblock %}

@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}
+QuizWiz | Add Question
+{% endblock %}
+
+{% block body %}
+<div
+  style="font-size: 50px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+  Create Quiz
+</div>
+
+
+
+<script>
+
+  function addQuestion(classID) {
+    newID = parseInt(classID.slice(-1)) + 1;
+    console.log(newID)
+    var element = document.getElementById("questions");
+
+    document.getElementById("divsubtn" + parseInt(classID.slice(-1))).remove();
+
+
+    const elem = document.createElement('div');
+    elem.innerHTML = '<div id="q'+newID+'">\
+    <h3>Question : </h3>\
+    <div class="input-group mb-3" id="q1gp1">\
+      <input type="text" class="form-control" name="question" placeholder="Type Question.." aria-label="Username"\
+        aria-describedby="basic-addon2" required>\
+      <div class="input-group-append">\
+        <span class="input-group-text" id="basic-addon2"><button type="del" class="btn btn-danger" id="delq'+newID+'"\
+            onclick="removeQuestion(this.id)">Delete</button></span>\
+      </div>\
+    </div>\
+        <div class="input-group mb-3">\
+            <input type="text" class="form-control" name="q'+ newID + 'op1" id="q' + newID + 'op1" placeholder="Option #1" aria-label="Username" aria-describedby="basic-addon2" required onclick="checkAndAddOption(this.id)">\
+            <div class="input-group-append">\
+                <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="answer"><label for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>\
+              </div>\
+              <div class="input-group-append">\
+                <span class="input-group-text" id="basic-addon2"><button type="del" class="btn  btn-danger"  id="q'+ newID + 'gpbtn2" onclick="removeOption(this.id)">Delete</button></span>\
+              </div>\
+        </div>\
+        <div class="input-group mb-3" id="q'+ newID + 'gp2">\
+            <input type="text" class="form-control" name="q'+ newID + 'op2" id="q' + newID + 'op2" placeholder="Option #2" aria-label="Username" aria-describedby="basic-addon2" required onclick="checkAndAddOption(this.id)">\
+            <div class="input-group-append">\
+                <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="answer"><label for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>\
+              </div>\
+            <div class="input-group-append">\
+                <span class="input-group-text" id="basic-addon2"><button type="del" class="btn btn-danger" id="q'+ newID + 'gpbtn2" onclick="removeOption(this.id)">Delete</button></span>\
+              </div>\
+        </div>\
+      </div>\
+        <div id ="options'+ newID + '"></div>\
+        <div style="font-size: 30px; margin-top: 1.5rem;" id="divsubtn'+ newID + '">\
+            <button type="button" class="btn btn-primary addquestion" id="btq'+ newID + '" onclick="addQuestion(this.id)">Add Question</button>\
+            <button type="submit" class="btn btn-success">Submit</button>\
+        </div>'
+
+    element.parentNode.insertBefore(elem, element);
+
+  }
+
+
+  function checkAndAddOption(className) {
+    console.log(className)
+    var newID = parseInt(className.slice(-1)) + 1;
+    var qID = parseInt(className.slice(1, 2))
+    console.log(className.slice(0, -1) + newID)
+    if (document.getElementById(className.slice(0, -1) + newID)) {
+      console.log("exist")
+    } else {
+
+      var element = document.getElementById("options" + qID);
+
+
+      const elem = document.createElement('div');
+      elem.innerHTML = '<div class="input-group mb-3" id="q' + qID + 'gp' + newID + '">\
+            <input type="text" class="form-control" name="q'+ qID + 'op' + newID + '" id="q' + qID + 'op' + newID + '" placeholder="Option #' + newID + '" aria-label="Username" aria-describedby="basic-addon2" required onclick="checkAndAddOption(this.id)">\
+            <div class="input-group-append">\
+                <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="answer"><label for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>\
+              </div>\
+              <div class="input-group-append">\
+                <span class="input-group-text" id="basic-addon2"><button type="del" class="btn btn-danger" id="q'+ qID + 'gpbtn' + newID + '" onclick="removeOption(this.id)">Delete</button></span>\
+              </div>\
+        </div>'
+
+      element.parentNode.insertBefore(elem, element);
+    }
+  }
+
+
+
+  function removeOption(className) {
+    console.log(className)
+    document.getElementById("q" + className.slice(1, 2) + "gp" + className.slice(-1)).remove();
+
+  }
+
+  function removeQuestion(className) {
+    console.log(className)
+    document.getElementById("q" + className.slice(-1)).remove();
+
+  }
+
+</script>
+
+<style>
+  .input-icons i {
+    position: absolute;
+  }
+
+  .input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .icon {
+    padding: 10px;
+    min-width: 40px;
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+  }
+</style>
+<br>
+<form id="quickForm" action="/addquestion" method="POST" style="height: 2.5rem; font-size: 1rem;left: 20px;">
+  <div id="questions">
+    <!-- <div id="q1">
+    <h3>Question : </h3>
+
+    <div class="input-group mb-3" id="q1gp1">
+      <input type="text" class="form-control" name="question" placeholder="Type Question.." aria-label="Username"
+        aria-describedby="basic-addon2" required>
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2"><button type="del" class="btn btn-danger" id="delq1"
+            onclick="removeQuestion(this.id)">Delete</button></span>
+      </div>
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" name="q1op1" id="q1op1" placeholder="Option #1" aria-label="Username"
+        aria-describedby="basic-addon2" required onclick="checkAndAddOption(this.id)">
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="answer"><label
+            for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>
+      </div>
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2"><button type="del" class="btn  btn-danger" id="q1gpbtn2"
+            onclick="removeOption(this.id)">Delete</button></span>
+      </div>
+    </div>
+    <div class="input-group mb-3" id="q1gp2">
+      <input type="text" class="form-control" name="q1op2" id="q1op2" placeholder="Option #2" aria-label="Username"
+        aria-describedby="basic-addon2" required onclick="checkAndAddOption(this.id)">
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="answer"><label
+            for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>
+      </div>
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2"><button type="del" class="btn btn-danger" id="q1gpbtn2"
+            onclick="removeOption(this.id)">Delete</button></span>
+      </div>
+    </div>
+    <div id="options1"></div>
+  </div> -->
+    <div style="font-size: 30px; margin-top: 1.5rem;" id="divsubtn1">
+      <button type="button" class="btn btn-primary addquestion" id="btq1" onclick="addQuestion(this.id)">Add
+        Question</button>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+  </div>
+</form>
+
+
+{% endblock %}
+
+
+{% block navbar%}
+<li class="nav-item">
+  <a href="/profile" class="nav-link">
+    <p>
+      Profile
+    </p>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="/add" class="nav-link">
+    <p>
+      Make Quiz
+    </p>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="/quizstrt" class="nav-link">
+    <!--<i class="nav-icon fas fa-tachometer-alt"></i> -->
+    <p>
+      Take Quiz
+    </p>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="/" class="nav-link" onclick="signOut();">
+    <p>
+      Logout
+    </p>
+  </a>
+</li>
+{% endblock %}
