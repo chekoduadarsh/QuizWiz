@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}
+QuizWiz | Take Quiz
+{% endblock %}
+
+{% block body %}
+
+<script>
+
+
+</script>
+
+<div class="container">
+  <div id="game" class="justify-center flex-column hidden">
+    <div id="hud">
+      <div id="hud-item">
+       
+        <h2>Quiz: {{quizdata.quizName}}</h2>
+        <h4>Grade: {{quizdata.grade}}</h4>
+        <h4>Sub-  Grde: {{quizdata.subGrade}}</h4>
+        <h4 >Topic: {{quizdata.topic}}</h4>
+      </div>
+      
+    </div>
+    <div id="quiz">
+      <div id="quizQuestion"></div>
+      <div id="prevQuestion" style="float: left;">
+        <button type="button" class="btn btn-warning" id="prevQ">Previous Question</button>
+      </div>
+      <div id="nextQuestion" style="float: right;">
+        <button type="button" class="btn btn-primary" id="nextQ">Next Question</button>
+      </div>
+
+      <div id="submitQuiz" style="right:40%;">
+        <button type="button" class="btn btn-success" id="subQ">Submit Quiz</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type=text/javascript>
+    function arrayRemove(arr, value) { 
+    
+    return arr.filter(function(ele){ 
+        return ele != value; 
+    });
+}
+
+  questionHandler({{ quizdata.questions|tojson }}, 0);  //security!!
+  function questionHandler(question, count) {
+
+    const subQ = document.getElementById("subQ");
+      if(subQ != null){
+        subQ.addEventListener("click", function() {
+        scoreTracker(question);
+      }); 
+      }
+
+
+    if(count == 0){
+
+      nextQ = document.getElementById("nextQuestion");
+      nextQ.innerHTML = '<button type="button" class="btn btn-primary" id="nextQ" ">Next Question</button>'
+
+      prevQ = document.getElementById("prevQuestion");
+      prevQ.innerHTML = ""
+
+    }
+    else if(count > 0 && count<question.length){
+      nextQ = document.getElementById("nextQuestion");
+      nextQ.innerHTML = '<button type="button" class="btn btn-primary" id="nextQ" ">Next Question</button>'
+
+      prevQ = document.getElementById("prevQuestion");
+      prevQ.innerHTML = '<button type="button" class="btn btn-warning" id="prevQ"  >Previous Question</button>'
+    }
+    else{
+      div = document.getElementById("nextQuestion");  
+      div.innerHTML = ""
+      prevQ = document.getElementById("prevQuestion");
+      prevQ.innerHTML = '<button type="button" class="btn btn-warning" id="prevQ" >Previous Question</button>'
+    }
+    
+    
+    if(count == question.length){      
+      div = document.getElementById("quizQuestion");
+      div.innerHTML = "<h1>You have Finished. Submit Now<h1>"
+
+        const prevQ = document.getElementById("prevQ");
+      if(prevQ != null){
+      prevQ.addEventListener("click", function() {
+        count = count-1
+        questionHandler(question, count);
+      }); 
+      }
+    }else{
+      var q = question[count].question
+      var o = question[count].options
+      var c = question[count].correctAnswer
+      var s = question[count].score
+      div = document.getElementById("quizQuestion");
+      div.innerHTML = ""
+      var qH1  = document.createElement("H2")
+      var t = document.createTextNode("Quesion: "+q);
+      qH1.appendChild(t);
+      div.append(qH1)
+      for(var option in o){
+
+        var choiceDiv= document.createElement("DIV")
+        clickbtn = document.createElement("BUTTON")
+        clickbtn.type = "button"
+
+        clickbtn.classList.add("btn")
+        if (question[count].selected.includes(o[option])){
+          clickbtn.classList.add("btn-danger")
+          }else{
+
+            clickbtn.classList.add("btn-success")
+          }
+          
+        clickbtn.style.float = "right"
+        var btnText = document.createTextNode("Choose");
+        choiceDiv.classList.add("correctAns")
+        choiceDiv.value = o[option]
+        choiceDiv.addEventListener("click", function() {
+          
+          var choicetext = this.querySelector('.choice-text').innerHTML;
+
+          if (question[count].selected.includes(choicetext)){
+            question[count].selected = arrayRemove(question[count].selected, choicetext);
+            var clickedbtn = this.querySelector('.btn');
+            clickedbtn.classList = ""
+            clickedbtn.classList.add("btn")
+            clickedbtn.classList.add("btn-success")
+          }else{
+            question[count].selected.push(choicetext)
+            var clickedbtn = this.querySelector('.btn');
+            clickedbtn.classList = ""
+            clickedbtn.classList.add("btn")
+            clickedbtn.classList.add("btn-danger")
+          }
+        });
+        clickbtn.appendChild(btnText);
+        choiceDiv.classList.add("choice-container");
+        var p = document.createElement("P")
+        p.classList.add("choice-text");
+        var tP = document.createTextNode(o[option]);
+        p.appendChild(tP);
+        choiceDiv.append(p)
+
+        choiceDiv.append(clickbtn)
+        div.append(choiceDiv)
+
+      }    
+      const nextQ = document.getElementById("nextQ");
+      if(nextQ != null){
+      nextQ.addEventListener("click", function() {
+        count = count+1
+        questionHandler(question, count);
+      }); 
+    }
+      const prevQ = document.getElementById("prevQ");
+      if(prevQ != null){
+      prevQ.addEventListener("click", function() {
+        count = count-1
+        questionHandler(question, count);
+      }); 
+      }
+    }
+    
+  }
+
+  function scoreTracker(questions) {
+    
+    var finalscore = 0
+    var totalScore = 0
+    var sAns = []
+    var cAns = []
+    for(var q in questions){
+      sAns = questions[q].selected
+      cAns = questions[q].correctAnswer
+      sAns = sAns.sort()
+      cAns = cAns.sort()
+      if ( JSON.stringify(sAns) === JSON.stringify(cAns)){
+        console.log(questions[q])
+        finalscore = finalscore+parseInt(questions[q].score)
+      }
+      totalScore = totalScore+parseInt(questions[q].score)
+    }
+    div = document.getElementById("quiz");
+      div.innerHTML = "<h1>You have Finished. You Scored "+ finalscore+ "/"+totalScore
+
+        //return to python backend
+
+  }
+
+</script>
+
+
+{% endblock %}
+
+
+{% block navbar%}
+
+<li class="nav-item">
+  <a href="/" class="nav-link" onclick="signOut();">
+    <p>
+      Logout
+    </p>
+  </a>
+</li>
+{% endblock %}

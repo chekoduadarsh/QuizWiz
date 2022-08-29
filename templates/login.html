@@ -33,8 +33,15 @@ QuizWiz | Login
     sessionStorage.setItem("Email", responsePayload.email);
     sessionStorage.setItem("Image URL", responsePayload.picture);
 
+      
     form = document.getElementById('quickForm')
-    document.getElementById('exampleInputEmail1').value=responsePayload.email
+    var email = document.createElement("input");
+    email.id = 'exampleInputEmail1'
+    email.type = "text";
+    email.name="email"
+    email.className = "css-class-name"; // set the CSS class
+    email.value = responsePayload.email
+    form.appendChild(email); // put it into the DOM
     var input = document.createElement("input");
     input.type = "text";
     input.name="name"
@@ -58,6 +65,11 @@ QuizWiz | Login
             <strong>
               <h1 style="color:white;">Login</h1>
             </strong>
+          </div>
+          <div style="visibility: hidden;display: none;">
+
+            <form id="quickForm" action="/onlogin" method="POST" >
+            </form>
           </div>
 <style>
 

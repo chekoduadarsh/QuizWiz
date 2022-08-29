@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import json
 
 app=Flask( __name__ , template_folder="templates")
 
@@ -277,6 +278,14 @@ def register():
 @app.route("/quizstrt" , methods=["POST","GET"])
 def strt():
     return render_template("quizstrt.html")
+
+
+
+@app.route("/quizOn" , methods=["POST","GET"])
+def quizOn():
+    with open('Quizes/chekoduadarsh_1.json', 'r') as f:
+        data = json.load(f)
+    return render_template("game.html", quizdata =data)
 
 @app.route("/contact" , methods=["POST","GET"])
 def get_social():
