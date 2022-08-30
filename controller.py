@@ -134,7 +134,9 @@ def userVerify():
     if email=="admin@host.local" and password== "12789":
         return render_template("admin.html")
 
-    return render_template("profile.html" , var=name)
+    with open('Quizes/chekoduadarsh_1.json', 'r') as f:
+        data = json.load(f)
+    return render_template("profile.html" , var=name, quizdata =data)
 
     
 def verify( email , pw ):
@@ -183,19 +185,60 @@ def showll():
 
 @app.route("/addquestion" , methods=["POST","GET"])
 def add_question():
+    inp = dict(request.form)
     print(request.form)
-    '''ques=request.form.get('question')
-    op1=request.form.get('op1')
-    op2=request.form.get('op2')
-    op3=request.form.get('op3')
-    op4=request.form.get('op4')
-    cor=request.form.get('corop')
-    
-    complete = ques+ "," +op1+ "," +op2+ "," +op3+ "," +op4+ "," +cor
-    myFile=open("questions.txt" , "a")
-    print(complete , file= myFile , sep="\n")
-    myFile.close()'''
-    return render_template("user.html")
+    #write to json
+    with open('static/Quizes/chekoduadarsh_1.json', "r") as file:
+        fdata = json.load(file)
+    data = {"quizName": inp["labelQuizName"],
+            "grade": inp["labelGrade"],
+            "quizID": "0"if len(fdata)== 0 else str(int(fdata[len(fdata)-1]["quizID"])+1),
+            "subGrade": inp["labelSubGrde"],
+            "topic": inp["labelQuizTopic"],
+            "quizDisc": inp["quizDisc"],
+            "quizHour": "0",
+            "quizMinutes": inp["labelMinute"],
+            "quizOwner": inp["owner"],
+            "quizTarget": ["all"] if inp["labelQuizShare"] == "" else inp["labelQuizShare"].split(",")}
+
+
+    questions = []
+    qids = []
+
+    for x in inp:
+        if 'question' in  x:
+            qids.append(str(x[-1]))
+
+    for qid in qids:
+        question = {}
+        question["question"] = inp['question'+qid]
+        question["score"] = inp['q'+qid+'Score']
+        question["selected"] = []
+        options = []
+        correct = []
+        for x in inp:
+            if "q"+qid in x:
+                if 'q'+qid+'op' in x:
+                    options.append(inp[x])
+                
+                if 'q'+qid+'answer' in x:
+                    correct.append(inp['q'+qid+'op'+x[-1]])
+
+        question["options"] = options
+        question["correctAnswer"] = correct
+
+        questions.append(question)
+
+        print(questions)
+
+    data["questions"] = questions
+
+    fdata.append(data)
+    # 3. Write json file
+    with open('static/Quizes/chekoduadarsh_1.json', "w") as file:
+        json.dump(fdata, file)
+        
+    return render_template("profile.html")
     
 
 @app.route("/submit" , methods=["POST","GET"])
@@ -253,7 +296,6 @@ def validation():
 
 @app.route("/show" , methods=["POST","GET"])
 def results():
-    
     global email
     wholeCredentials = []
     attempts = 0
@@ -268,24 +310,40 @@ def results():
         if email == check:
             score = str(getField(result, 3))
             attempts = str(getField(result, 4))
-
     return render_template("result.html" , var1=score, var2=attempts)
 
 @app.route("/register" , methods=["POST","GET"])
 def register():
     return render_template("register.html")
 
-@app.route("/quizstrt" , methods=["POST","GET"])
-def strt():
-    return render_template("quizstrt.html")
+@app.route("/makeQuiz" , methods=["POST","GET"])
+def makeQuiz():
+    return render_template("makeQuiz.html")
 
-
+@app.route("/score" , methods=["POST","GET"])
+def score():
+    score = request.args.get('Score')
+    userID = request.args.get('user')
+    quizID = request.args.get('quizID')
+    myFile=open("userscore.csv" , "r")
+    data = myFile.read().splitlines()
+    myFile.close()
+    data.append(userID+","+quizID+","+score)
+    myFile=open("userscore.csv" , "w")
+    for d in data:
+        print(d , file= myFile , sep="\n")
+    myFile.close()
+    return render_template("Score.html", Score =score)
 
 @app.route("/quizOn" , methods=["POST","GET"])
 def quizOn():
-    with open('Quizes/chekoduadarsh_1.json', 'r') as f:
+    quizID = request.args.get('quizID')
+    with open('static/Quizes/chekoduadarsh_1.json', 'r') as f:
         data = json.load(f)
-    return render_template("game.html", quizdata =data)
+    for d in (data):
+        if d["quizID"] == quizID:
+          return render_template("game.html", quizdata =d)
+    return render_template("profile.html")
 
 @app.route("/contact" , methods=["POST","GET"])
 def get_social():
@@ -293,7 +351,14 @@ def get_social():
 
 @app.route("/add" , methods=["POST","GET"])
 def add():
-    return render_template("addques.html")
+    labelQuizName = request.args.get('labelQuizName')
+    labelQuizTopic = request.args.get('labelQuizTopic')
+    labelGrade = request.args.get('labelGrade')
+    labelSubGrde = request.args.get('labelSubGrde')
+    labelQuizShare = request.args.get('labelQuizShare')
+    labelMinute = request.args.get('labelMinute')
+    quizDisc = request.args.get('quizDisc')
+    return render_template("addques.html",labelQuizName=labelQuizName,labelQuizTopic=labelQuizTopic,labelGrade=labelGrade,labelSubGrde=labelSubGrde,labelQuizShare=labelQuizShare, labelMinute=labelMinute,quizDisc=quizDisc)
 
 @app.route("/profile" , methods=["POST","GET"])
 def profile():

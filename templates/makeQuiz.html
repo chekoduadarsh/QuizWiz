@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}
+Quiz
+{% endblock %}
+
+{% block body %}
+<!-- Main content -->
+
+<script>
+    function SubmitFormQuiz(){
+        var chkdiv = document.getElementById('quizForm')
+        var chkflg = false
+        Array.from(chkdiv.querySelectorAll(".mandatory")).map(input=>  {
+            if(input.value == ""){
+                chkflg = true
+            }
+        })
+        if(chkflg){
+                            
+            alert("Please fill the mandatory columns");
+                return false;
+        }
+
+        var labelQuizName = document.getElementById("labelQuizName").value;
+        var labelQuizTopic = document.getElementById("labelQuizTopic").value;
+        var labelGrade = document.getElementById("labelGrade").value;
+        var labelSubGrde = document.getElementById("labelSubGrde").value;
+        var labelQuizShare = document.getElementById("labelQuizShare").value;
+        var labelMinute = document.getElementById("labelMinute").value;
+        var quizDisc = document.getElementById("quizDisc").value;
+        
+        window.location.href = "/add?labelQuizName="+labelQuizName+"&labelQuizTopic="+labelQuizTopic+"&labelGrade="+labelGrade+"&labelSubGrde="+labelSubGrde+"&labelQuizShare="+"&labelMinute="+labelMinute+"&quizDisc="+quizDisc;
+
+        //console.log("/add?labelQuizName="+labelQuizName+"&labelQuizTopic="+labelQuizTopic+"&labelGrade="+labelGrade+"&labelGrade="+labelSubGrde+"&labelSubGrde="+labelGrade+"&labelQuizShare="+labelQuizShare)
+    }
+
+</script>
+<div id="quizForm">
+<form onsubmit="SubmitFormQuiz()">
+    <div class="form-group">
+      <label for="labelQuizName">Quiz Name *</label>
+      <input type="text" class="mandatory form-control" id="labelQuizName"  placeholder="Enter Quiz Name" required>
+    </div>
+    <div class="form-group">
+        <label for="labelQuizTopic">Quiz Topic *</label>
+        <input type="text" class="mandatory form-control" id="labelQuizTopic"  placeholder="Enter Quiz Topic" required>
+      </div>
+    <div class="form-group">
+        <label for="labelGrade">Grade *</label>
+        <input type="text" class="mandatory form-control" id="labelGrade"  placeholder="Enter Grade" required>
+      </div>
+      <div class="form-group">
+        <label for="labelSubGrde:">Sub-Grde</label>
+        <input type="text" class="form-control" id="labelSubGrde"  placeholder="Enter Sub-Grade">
+      </div>
+      <div class="form-group">
+        <label for="labelTime">Quiz Time *</label>
+        <input type="text" class="mandatory form-control" id="labelMinute"  placeholder="Enter Minute" required>
+      </div>
+
+      <label for="labelTime">Quiz Discription *</label>
+     <textarea class="form-control" class="mandatory" id="quizDisc" name="quizDisc" rows="3" required></textarea>
+      <div class="form-group">
+        <label for="labelQuizShare">Share Quiz With Only</label>
+        <input type="text" class="form-control" id="labelQuizShare"  placeholder="Enter QuizName">
+        <small id="emailHelp" class="form-text text-muted">Leave it empty to share with everyone. Else fill it as (abc@gmail.com,def@gmail.com ...)</small>
+      </div>
+      <small id="emailHelp" class="form-text text-muted">* Mandatory Inputs</small>
+    <button type="button" class="btn btn-primary" onclick="SubmitFormQuiz()">Submit</button>
+  </form>
+</div>
+
+    
+{% endblock %}
+
+
+{% block navbar%}
+<li class="nav-item">
+<li class="nav-item">
+    <a href="/register" class="nav-link">
+        <p>
+            Register
+        </p>
+    </a>
+</li>
+{% endblock %}

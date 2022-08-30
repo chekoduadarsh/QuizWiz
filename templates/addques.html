@@ -10,8 +10,6 @@ QuizWiz | Add Question
   Create Quiz
 </div>
 
-
-
 <script>
 
   function addQuestion(classID) {
@@ -19,15 +17,25 @@ QuizWiz | Add Question
     console.log(newID)
     var element = document.getElementById("questions");
 
+
+    var chkdiv = document.getElementById('q'+classID.slice(-1))
+    if(chkdiv){
+    if(chkdiv.querySelectorAll("input[type=checkbox]:checked").length == 0){
+      alert("You must check at least one Answer.");
+      return false
+    }
+    }
+
     document.getElementById("divsubtn" + parseInt(classID.slice(-1))).remove();
-
-
     const elem = document.createElement('div');
     elem.innerHTML = '<div id="q'+newID+'">\
     <h3>Question : </h3>\
     <div class="input-group mb-3" id="q1gp1">\
-      <input type="text" class="form-control" name="question" placeholder="Type Question.." aria-label="Username"\
+      <input type="text" class="form-control" name="question'+newID+'" placeholder="Type Question.." aria-label="Username"\
         aria-describedby="basic-addon2" required>\
+        <span class="input-group-text">Score</span>\
+        <input type="text" class="form-control" name="q'+newID+'Score" placeholder="Score" aria-label="Username"\
+        aria-describedby="basic-addon2" value="1" required>\
       <div class="input-group-append">\
         <span class="input-group-text" id="basic-addon2"><button type="del" class="btn btn-danger" id="delq'+newID+'"\
             onclick="removeQuestion(this.id)">Delete</button></span>\
@@ -36,7 +44,7 @@ QuizWiz | Add Question
         <div class="input-group mb-3">\
             <input type="text" class="form-control" name="q'+ newID + 'op1" id="q' + newID + 'op1" placeholder="Option #1" aria-label="Username" aria-describedby="basic-addon2" required onclick="checkAndAddOption(this.id)">\
             <div class="input-group-append">\
-                <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="answer"><label for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>\
+                <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="q'+newID+'answer1" id="q'+newID+'answer1"><label for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>\
               </div>\
               <div class="input-group-append">\
                 <span class="input-group-text" id="basic-addon2"><button type="del" class="btn  btn-danger"  id="q'+ newID + 'gpbtn2" onclick="removeOption(this.id)">Delete</button></span>\
@@ -45,7 +53,7 @@ QuizWiz | Add Question
         <div class="input-group mb-3" id="q'+ newID + 'gp2">\
             <input type="text" class="form-control" name="q'+ newID + 'op2" id="q' + newID + 'op2" placeholder="Option #2" aria-label="Username" aria-describedby="basic-addon2" required onclick="checkAndAddOption(this.id)">\
             <div class="input-group-append">\
-                <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="answer"><label for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>\
+                <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="q'+newID+'answer2" id="q'+newID+'answer2"><label for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>\
               </div>\
             <div class="input-group-append">\
                 <span class="input-group-text" id="basic-addon2"><button type="del" class="btn btn-danger" id="q'+ newID + 'gpbtn2" onclick="removeOption(this.id)">Delete</button></span>\
@@ -55,8 +63,8 @@ QuizWiz | Add Question
         <div id ="options'+ newID + '"></div>\
         <div style="font-size: 30px; margin-top: 1.5rem;" id="divsubtn'+ newID + '">\
             <button type="button" class="btn btn-primary addquestion" id="btq'+ newID + '" onclick="addQuestion(this.id)">Add Question</button>\
-            <button type="submit" class="btn btn-success">Submit</button>\
         </div>'
+        // <button type="submit" class="btn btn-success">Submit</button>\
 
     element.parentNode.insertBefore(elem, element);
 
@@ -79,7 +87,7 @@ QuizWiz | Add Question
       elem.innerHTML = '<div class="input-group mb-3" id="q' + qID + 'gp' + newID + '">\
             <input type="text" class="form-control" name="q'+ qID + 'op' + newID + '" id="q' + qID + 'op' + newID + '" placeholder="Option #' + newID + '" aria-label="Username" aria-describedby="basic-addon2" required onclick="checkAndAddOption(this.id)">\
             <div class="input-group-append">\
-                <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="answer"><label for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>\
+                <span class="input-group-text" id="basic-addon2"><input type="checkbox" name="q'+qID+'answer'+newID+' id="q'+qID+'answer'+newID+'"><label for="vehicle1">&nbsp;&nbsp;Right Answer</label></span>\
               </div>\
               <div class="input-group-append">\
                 <span class="input-group-text" id="basic-addon2"><button type="del" class="btn btn-danger" id="q'+ qID + 'gpbtn' + newID + '" onclick="removeOption(this.id)">Delete</button></span>\
@@ -129,6 +137,27 @@ QuizWiz | Add Question
 </style>
 <br>
 <form id="quickForm" action="/addquestion" method="POST" style="height: 2.5rem; font-size: 1rem;left: 20px;">
+  <div class="form-group" style="display:none">
+    <input type="text" class="form-control" id="owner" name="owner"  value="{{labelQuizName}}" readonly>
+    <label for="labelQuizName">Quiz Name:</label>
+    <input type="text" class="form-control" id="labelQuizName" name="labelQuizName"  value="{{labelQuizName}}" readonly>
+      <label for="labelQuizTopic">Quiz Topic:</label>
+      <input type="text" class="form-control" id="labelQuizTopic"  name="labelQuizTopic"  value="{{labelQuizTopic}}"readonly>
+      <label for="labelGrade">Grade:</label>
+      <input type="text" class="form-control" id="labelGrade" name="labelGrade" value="{{labelGrade}}" readonly>
+      <label for="labelSubGrde:">Sub-Grde:</label>
+      <input type="text" class="form-control" id="labelSubGrde" name="labelSubGrde"  value="{{labelSubGrde}}" readonly>
+      <label for="labelQuizShare">Share Quiz With Only:</label>
+      <input type="text" class="form-control" id="labelQuizShare" name="labelQuizShare"  value="{{labelQuizShare}}" readonly>
+      <label for="labelMinute">Quiz Time:</label>
+      <input type="text" class="form-control" id="labelMinute" name="labelMinute"  value="{{labelMinute}}" readonly>
+      <label for="labelTime">Quiz Discription *</label>
+     <textarea class="form-control" id="quizDisc" name="quizDisc" rows="3" value="{{quizDisc}}"readonly></textarea>
+    </div>
+    <script>
+      var input = document.getElementById('owner')
+      input.value=sessionStorage.getItem("Email")
+    </script>
   <div id="questions">
     <!-- <div id="q1">
     <h3>Question : </h3>
@@ -137,7 +166,7 @@ QuizWiz | Add Question
       <input type="text" class="form-control" name="question" placeholder="Type Question.." aria-label="Username"
         aria-describedby="basic-addon2" required>
       <div class="input-group-append">
-        <span class="input-group-text" id="basic-addon2"><button type="del" class="btn btn-danger" id="delq1"
+        <span class="input-group-text" id="basic-addon2"><button type="del" class="btn btndanger" id="delq1"
             onclick="removeQuestion(this.id)">Delete</button></span>
       </div>
     </div>
@@ -170,9 +199,10 @@ QuizWiz | Add Question
     <div style="font-size: 30px; margin-top: 1.5rem;" id="divsubtn1">
       <button type="button" class="btn btn-primary addquestion" id="btq1" onclick="addQuestion(this.id)">Add
         Question</button>
-      <button type="submit" class="btn btn-success">Submit</button>
-    </div>
+      </div>
+    
   </div>
+      <button type="submit" class="btn btn-success">Submit</button>
 </form>
 
 
@@ -188,17 +218,9 @@ QuizWiz | Add Question
   </a>
 </li>
 <li class="nav-item">
-  <a href="/add" class="nav-link">
+  <a href="/makeQuiz" class="nav-link">
     <p>
       Make Quiz
-    </p>
-  </a>
-</li>
-<li class="nav-item">
-  <a href="/quizstrt" class="nav-link">
-    <!--<i class="nav-icon fas fa-tachometer-alt"></i> -->
-    <p>
-      Take Quiz
     </p>
   </a>
 </li>

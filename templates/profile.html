@@ -7,6 +7,9 @@
 {% block body %}
 <script>
 
+
+
+
 </script>
 <div style="font-size: 50px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif" id="profileData">
    Welcome 
@@ -16,6 +19,9 @@
 <script>
   var div = document.getElementById('profileData')
   div.innerHTML = "Welcome " +sessionStorage.getItem("Name");
+  if(sessionStorage.getItem("Name") == null){
+    window.location.href = "/"
+  }
 </script>
 <style>
   * {
@@ -101,143 +107,70 @@
 
 
 <div class="container-fluid py-2" style = "overflow-x: auto;">
-  <h2 class="font-weight-light">Quiz from your followers</h2>
-  <div class="d-flex flex-row flex-nowrap">
-    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 1</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 2</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 3</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 4</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>
-    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 5</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>
+  <h2 class="font-weight-light">Your Quiz</h2>
+  <div class="d-flex flex-row flex-nowrap" id="myquizs">
+     
+    <script>
 
-    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 6</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div><div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 7</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div><div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 8</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div><div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 9</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div><div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 10</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>
-  </div>
+
+      var quizes
+      fetch('../static/Quizes/chekoduadarsh_1.json')
+    .then((response) => response.json())
+    .then((quizes) => {
+      console.log(quizes)
+
+      var div = document.getElementById("myquizs")
+      console.log( sessionStorage.getItem("Email"))
+      for(quiz in quizes){
+      console.log(quizes[quiz])
+        if(quizes[quiz].quizOwner=== sessionStorage.getItem("Email")){
+        div.innerHTML=div.innerHTML+'<div class="card" style="min-width: 18rem;">\
+      <div class="card-body">\
+        <h5 class="card-title">'+quizes[quiz].quizName+'</h5>\
+        <p class="card-text">'+quizes[quiz].quizDisc+'</p>\
+        <a href="/quizOn?quizID='+quizes[quiz].quizID+'" class="btn btn-primary">Solve Quiz</a>\
+      </div>\
+    </div>'
+        }
+      }
+    });
+
+
+      console.log(quizes)
+     </script>
+    
+</div>
 </div>
 
 <div class="container-fluid py-2" style = "overflow-x: auto;">
   <h2 class="font-weight-light">Top Quizes ⭐</h2>
-  <div class="d-flex flex-row flex-nowrap">
-    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 1</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 2</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 3</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 4</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>
-    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 5</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>
+  <div class="d-flex flex-row flex-nowrap" id ="topQuizs">
+    <script>
 
-    <div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 6</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div><div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 7</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div><div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 8</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div><div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 9</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div><div class="card" style="min-width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Quiz 10</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Solve Quiz</a>
-      </div>
-    </div>
-  </div>
+
+      var quizes
+      fetch('../static/Quizes/chekoduadarsh_1.json')
+    .then((response) => response.json())
+    .then((quizes) => {
+      console.log(quizes)
+
+      var div = document.getElementById("topQuizs")
+      console.log( sessionStorage.getItem("Email"))
+      for(quiz in quizes){
+      console.log(quizes[quiz])
+        if(quizes[quiz].quizTarget.includes("all")){
+        div.innerHTML=div.innerHTML+'<div class="card" style="min-width: 18rem;">\
+      <div class="card-body">\
+        <h5 class="card-title">'+quizes[quiz].quizName+'</h5>\
+        <p class="card-text">'+quizes[quiz].quizDisc+'</p>\
+        <a href="/quizOn?quizID='+quizes[quiz].quizID+'" class="btn btn-primary">Solve Quiz</a>\
+      </div>\
+    </div>'
+        }
+      }
+    });
+    </script>
+</div>
 </div>
 {% endblock %}
 
@@ -251,20 +184,12 @@
   </a>
 </li>
 <li class="nav-item">
-  <a href="/add" class="nav-link">
+  <a href="/makeQuiz" class="nav-link">
     <p>
       Make Quiz
     </p>
   </a>
 </li>
-<li class="nav-item">
-    <a href="/quizstrt" class="nav-link">
-<!--<i class="nav-icon fas fa-tachometer-alt"></i> -->
-      <p>
-        Take Quiz
-      </p>
-    </a>
-  </li>
   <li class="nav-item">
     <a href="/show" class="nav-link">
       <p>

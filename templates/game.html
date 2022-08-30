@@ -18,10 +18,17 @@ QuizWiz | Take Quiz
        
         <h2>Quiz: {{quizdata.quizName}}</h2>
         <h4>Grade: {{quizdata.grade}}</h4>
-        <h4>Sub-  Grde: {{quizdata.subGrade}}</h4>
+        <h4>Sub-Grde: {{quizdata.subGrade}}</h4>
         <h4 >Topic: {{quizdata.topic}}</h4>
       </div>
-      
+      <div id="hud-item">
+        <p class="hud-prefix">
+          Score
+        </p>
+        <h1 class="hud-main-text" id="quizTime">
+          <div>Quiz closes in <span id="time"></span> minutes!</div>
+        </h1>
+      </div>  
     </div>
     <div id="quiz">
       <div id="quizQuestion"></div>
@@ -39,6 +46,34 @@ QuizWiz | Take Quiz
   </div>
 </div>
 <script type=text/javascript>
+
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer == 0) {
+          console.log("TIME OUT")
+          var div = document.getElementById('subQ');
+          div.click();
+          timer = 0;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    var fiveMinutes = parseInt({{quizdata.quizMinutes}})*60,
+        display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+};
+
+
     function arrayRemove(arr, value) { 
     
     return arr.filter(function(ele){ 
@@ -49,9 +84,13 @@ QuizWiz | Take Quiz
   questionHandler({{ quizdata.questions|tojson }}, 0);  //security!!
   function questionHandler(question, count) {
 
+
+
     const subQ = document.getElementById("subQ");
       if(subQ != null){
         subQ.addEventListener("click", function() {
+          var div = document.getElementById('quizTime');
+          div.innerHTML = ""
         scoreTracker(question);
       }); 
       }
@@ -118,26 +157,39 @@ QuizWiz | Take Quiz
           }
           
         clickbtn.style.float = "right"
-        var btnText = document.createTextNode("Choose");
+        var btnText = document.createTextNode("     ");
         choiceDiv.classList.add("correctAns")
+        choiceDiv.id = o[option]
         choiceDiv.value = o[option]
         choiceDiv.addEventListener("click", function() {
           
           var choicetext = this.querySelector('.choice-text').innerHTML;
+          var selectedOptions = question[count].selected
 
-          if (question[count].selected.includes(choicetext)){
-            question[count].selected = arrayRemove(question[count].selected, choicetext);
+          for(var so in selectedOptions){
+            var cDiv = document.getElementById(selectedOptions[so]);
+            if(cDiv != null){
+              var clickedbtn = cDiv.querySelector('.btn');
+              clickedbtn.classList = ""
+              clickedbtn.classList.add("btn")
+              clickedbtn.classList.add("btn-success")
+            }
+          }
+
+          if (question[count].selected.includes(choicetext)){            
+            question[count].selected = [];
             var clickedbtn = this.querySelector('.btn');
             clickedbtn.classList = ""
             clickedbtn.classList.add("btn")
             clickedbtn.classList.add("btn-success")
           }else{
-            question[count].selected.push(choicetext)
+            question[count].selected = [choicetext]
             var clickedbtn = this.querySelector('.btn');
             clickedbtn.classList = ""
             clickedbtn.classList.add("btn")
             clickedbtn.classList.add("btn-danger")
           }
+          console.log(question)
         });
         clickbtn.appendChild(btnText);
         choiceDiv.classList.add("choice-container");
@@ -180,15 +232,15 @@ QuizWiz | Take Quiz
       cAns = questions[q].correctAnswer
       sAns = sAns.sort()
       cAns = cAns.sort()
-      if ( JSON.stringify(sAns) === JSON.stringify(cAns)){
-        console.log(questions[q])
+      if (cAns.includes(sAns[0])){
         finalscore = finalscore+parseInt(questions[q].score)
       }
       totalScore = totalScore+parseInt(questions[q].score)
     }
-    div = document.getElementById("quiz");
-      div.innerHTML = "<h1>You have Finished. You Scored "+ finalscore+ "/"+totalScore
-
+    //security
+    score = finalscore+ "/"+totalScore
+    console.log(score)
+    window.location.href = "/score?Score="+score+"&user="+sessionStorage.getItem("Email")+"&quizID="+{{quizdata.quizID}};
         //return to python backend
 
   }
