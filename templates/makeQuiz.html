@@ -7,6 +7,8 @@ Quiz
 {% block body %}
 <!-- Main content -->
 
+
+<link rel="stylesheet" href="../static/css/shareSwitch.css">
 <script>
     function SubmitFormQuiz(){
         var chkdiv = document.getElementById('quizForm')
@@ -61,10 +63,36 @@ Quiz
 
       <label for="labelTime">Quiz Discription *</label>
      <textarea class="form-control" class="mandatory" id="quizDisc" name="quizDisc" rows="3" required></textarea>
+
+      <script>
+function inputfield() {
+  var checkBox = document.getElementById("cx");
+  var div = document.getElementById("emails");
+  if (checkBox.checked == true){
+    div.style.display = "";
+  } else {
+    div.style.display = "none";
+  }
+} 
+
+      </script>
       <div class="form-group">
-        <label for="labelQuizShare">Share Quiz With Only</label>
-        <input type="text" class="form-control" id="labelQuizShare"  placeholder="Enter QuizName">
+        <label for="labelQuizShare">Share Quiz</label>
+        <div class="public-private-toggle">
+            Public
+            <span class="ios-toggle">
+              <input type="checkbox" id="cx" onclick="inputfield()">
+              <label for="cx"></label>
+            </span>
+            Private 
+        </div>
+    </br>
+    <div id = "emails" style="display:none">
+
+        <input type="text" class="form-control" id="labelQuizShare"  placeholder="Enter Emails: abc@gmail.com,def@gmai.com ...">
         <small id="emailHelp" class="form-text text-muted">Leave it empty to share with everyone. Else fill it as (abc@gmail.com,def@gmail.com ...)</small>
+
+    </div>
       </div>
       <small id="emailHelp" class="form-text text-muted">* Mandatory Inputs</small>
     <button type="button" class="btn btn-primary" onclick="SubmitFormQuiz()">Submit</button>
