@@ -18,6 +18,10 @@ Quiz
                 chkflg = true
             }
         })
+        if(labelGrade = document.getElementById("labelGrade").value == ""){
+
+            chkflg = true
+        }
         if(chkflg){
                             
             alert("Please fill the mandatory columns");
@@ -32,7 +36,9 @@ Quiz
         var labelMinute = document.getElementById("labelMinute").value;
         var quizDisc = document.getElementById("quizDisc").value;
         
-        window.location.href = "/add?labelQuizName="+labelQuizName+"&labelQuizTopic="+labelQuizTopic+"&labelGrade="+labelGrade+"&labelSubGrde="+labelSubGrde+"&labelQuizShare="+"&labelMinute="+labelMinute+"&quizDisc="+quizDisc;
+        var labelSubject = document.getElementById("labelSubject").value;
+        var labelMedium = document.getElementById("labelMedium").value;
+        window.location.href = "/add?labelQuizName="+labelQuizName+"&labelQuizTopic="+labelQuizTopic+"&labelGrade="+labelGrade+"&labelSubGrde="+labelSubGrde+"&labelQuizShare="+"&labelMinute="+labelMinute+"&quizDisc="+quizDisc+"&labelSubject="+labelSubject+"&labelMedium="+labelMedium;
 
         //console.log("/add?labelQuizName="+labelQuizName+"&labelQuizTopic="+labelQuizTopic+"&labelGrade="+labelGrade+"&labelGrade="+labelSubGrde+"&labelSubGrde="+labelGrade+"&labelQuizShare="+labelQuizShare)
     }
@@ -41,27 +47,83 @@ Quiz
 <div id="quizForm">
 <form onsubmit="SubmitFormQuiz()">
     <div class="form-group">
-      <label for="labelQuizName">Quiz Name *</label>
+      <label for="labelQuizName">Title *</label>
       <input type="text" class="mandatory form-control" id="labelQuizName"  placeholder="Enter Quiz Name" required>
     </div>
+      <script>
+function subgradeCreator(grade){
+
+  var div = document.getElementById("subgrades");
+  if (grade=="Grade 1-12"){
+div.innerHTML = '      <div class="form-group">\
+        <label for="labelSubGrde:">Garde</label>\
+        <select class="form-control form-select-lg mb-3" aria-label=".form-select-lg example"  id="labelSubGrde"  required>\
+            <option value="other">Other</option>\
+            <option value="Grade-1">Grade-1</option>\
+            <option value="Grade-2">Grade-2</option>\
+            <option value="Grade-3">Grade-3</option>\
+            <option value="Grade-4">Grade-4</option>\
+            <option value="Grade-5">Grade-5</option>\
+            <option value="Grade-6">Grade-6</option>\
+            <option value="Grade-7">Grade-7</option>\
+            <option value="Grade-8">Grade-8</option>\
+            <option value="Grade-9">Grade-9</option>\
+            <option value="Grade-10">Grade-10</option>\
+            <option value="Grade-11">Grade-11</option>\
+            <option value="Grade-12">Grade-12</option>\
+          </select> \
+      </div>\      <div class="form-group">\
+        <label for="labelSubject">Subject</label>\
+        <input type="text" class="form-control" id="labelSubject"  placeholder="Enter Subject">\
+      </div>\
+         <div class="form-group">\
+        <label for="labelMedium">Medium</label>\
+        <input type="text" class="form-control" id="labelMedium"  placeholder="Enter Language Medium">\
+      </div>'
+
+  } else{
+div.innerHTML = '      <div class="form-group">\
+        <input type="text" class="form-control" id="labelSubGrde"  placeholder="Type your Exam Name">\
+      </div>'
+
+  }
+ 
+
+}
+
+      </script>
     <div class="form-group">
-        <label for="labelQuizTopic">Quiz Topic *</label>
-        <input type="text" class="mandatory form-control" id="labelQuizTopic"  placeholder="Enter Quiz Topic" required>
-      </div>
-    <div class="form-group">
-        <label for="labelGrade">Grade *</label>
-        <input type="text" class="mandatory form-control" id="labelGrade"  placeholder="Enter Grade" required>
+        
+        <select class="form-control form-select-lg mb-3" aria-label=".form-select-lg example"  id="labelGrade" onchange="subgradeCreator(this.value)" required>
+            <option value="">Select</option>
+            <option value="Grade 1-12">Grade 1-12</option>
+            <option value="Recruitment Exam">Recruitment Exam</option>
+            <option value="Entrance Exam">Entrance Exam</option>
+            <option value="Other">Other</option>
+          </select>  
+    </div>
+    <div id = "subgrades">
+
       </div>
       <div class="form-group">
-        <label for="labelSubGrde:">Sub-Grde</label>
-        <input type="text" class="form-control" id="labelSubGrde"  placeholder="Enter Sub-Grade">
+        <label for="labelSubject">Subject</label>
+        <input type="text" class="form-control" id="labelSubject"  placeholder="Enter Subject">
+      </div>
+
+      <div class="form-group">
+        <label for="labelQuizTopic">Topic</label>
+        <input type="text" class="form-control" id="labelQuizTopic"  placeholder="Enter Quiz Topic" required>
       </div>
       <div class="form-group">
-        <label for="labelTime">Quiz Time *</label>
+        <label for="labelMedium">Medium * </label>
+        <input type="text" class="mandatory form-control" id="labelMedium"  placeholder="Enter Language Medium">
+      </div>
+      <div class="form-group">
+        <label for="labelTime">Time *</label>
         <input type="text" class="mandatory form-control" id="labelMinute"  placeholder="Enter Minute" required>
       </div>
 
-      <label for="labelTime">Quiz Discription *</label>
+      <label for="labelTime">Discription *</label>
      <textarea class="form-control" class="mandatory" id="quizDisc" name="quizDisc" rows="3" required></textarea>
 
       <script>
@@ -89,7 +151,7 @@ function inputfield() {
     </br>
     <div id = "emails" style="display:none">
 
-        <input type="text" class="form-control" id="labelQuizShare"  placeholder="Enter Emails: abc@gmail.com,def@gmai.com ...">
+        <input type="text" class="form-control" id="labelQuizShare"  placeholder="Enter Emails: abc@gmail.com,def@gmail.com ...">
         <small id="emailHelp" class="form-text text-muted">Leave it empty to share with everyone. Else fill it as (abc@gmail.com,def@gmail.com ...)</small>
 
     </div>
