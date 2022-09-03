@@ -198,6 +198,8 @@ def add_question():
             "quizDisc": inp["quizDisc"],
             "quizHour": "0",
             "quizMinutes": inp["labelMinute"],
+            "quizSubject": inp["labelSubject"],
+            "quizMedium": inp["labelMedium"],
             "quizOwner": inp["owner"],
             "quizTarget": ["all"] if inp["labelQuizShare"] == "" else inp["labelQuizShare"].split(",")}
 
@@ -358,7 +360,9 @@ def add():
     labelQuizShare = request.args.get('labelQuizShare')
     labelMinute = request.args.get('labelMinute')
     quizDisc = request.args.get('quizDisc')
-    return render_template("addques.html",labelQuizName=labelQuizName,labelQuizTopic=labelQuizTopic,labelGrade=labelGrade,labelSubGrde=labelSubGrde,labelQuizShare=labelQuizShare, labelMinute=labelMinute,quizDisc=quizDisc)
+    labelSubject = request.args.get('labelSubject')
+    labelMedium = request.args.get('labelMedium')
+    return render_template("addques.html",labelQuizName=labelQuizName,labelQuizTopic=labelQuizTopic,labelGrade=labelGrade,labelSubGrde=labelSubGrde,labelQuizShare=labelQuizShare, labelMinute=labelMinute,quizDisc=quizDisc, labelMedium=labelMedium,labelSubject=labelSubject)
 
 @app.route("/profile" , methods=["POST","GET"])
 def profile():
