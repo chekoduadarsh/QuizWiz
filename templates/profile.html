@@ -112,7 +112,6 @@
      
     <script>
 
-
       var quizes
       fetch('../static/Quizes/chekoduadarsh_1.json')
     .then((response) => response.json())
@@ -122,13 +121,18 @@
       var div = document.getElementById("myquizs")
       console.log( sessionStorage.getItem("Email"))
       for(quiz in quizes){
-      console.log(quizes[quiz])
+      var editRedirect = "/makeQuiz?labelQuizName="+quizes[quiz].quizName+"&labelQuizTopic="+quizes[quiz].topic+"&labelGrade="+quizes[quiz].grade+"&labelSubGrde="+quizes[quiz].subGrade+"&labelQuizShare="+quizes[quiz].quizTarget+"&labelMinute="+quizes[quiz].quizMinutes+"&quizDisc="+quizes[quiz].quizDisc+"&labelSubject="+quizes[quiz].quizSubject+"&labelMedium="+quizes[quiz].quizMedium+"&quizID="+quizes[quiz].quizID+""
+
         if(quizes[quiz].quizOwner=== sessionStorage.getItem("Email")){
         div.innerHTML=div.innerHTML+'<div class="card" style="min-width: 18rem;">\
       <div class="card-body">\
         <h5 class="card-title">'+quizes[quiz].quizName+'</h5>\
         <p class="card-text">'+quizes[quiz].quizDisc+'</p>\
         <a href="/quizOn?quizID='+quizes[quiz].quizID+'" class="btn btn-primary">Solve Quiz</a>\
+        </br>\
+        </br>\
+        <a href="'+editRedirect+'" class="btn btn-secondary">Edit Quiz</a>\
+        <a href="/quizOn?add='+quizes[quiz]+'" class="btn btn-danger">Delete Quiz</a>\
       </div>\
     </div>'
         }

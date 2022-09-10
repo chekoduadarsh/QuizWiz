@@ -10,52 +10,101 @@ Quiz
 
 <link rel="stylesheet" href="../static/css/shareSwitch.css">
 <script>
-    function SubmitFormQuiz(){
-        var chkdiv = document.getElementById('quizForm')
-        var chkflg = false
-        Array.from(chkdiv.querySelectorAll(".mandatory")).map(input=>  {
-            if(input.value == ""){
-                chkflg = true
-            }
-        })
-        if(labelGrade = document.getElementById("labelGrade").value == ""){
 
-            chkflg = true
-        }
-        if(chkflg){
-                            
-            alert("Please fill the mandatory columns");
-                return false;
-        }
+  function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    if (decodeURIComponent(results[2].replace(/\+/g, ' ')) == 'undefined') return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
 
-        var labelQuizName = document.getElementById("labelQuizName").value;
-        var labelQuizTopic = document.getElementById("labelQuizTopic").value;
-        var labelGrade = document.getElementById("labelGrade").value;
-        var labelSubGrde = document.getElementById("labelSubGrde").value;
-        var labelQuizShare = document.getElementById("labelQuizShare").value;
-        var labelMinute = document.getElementById("labelMinute").value;
-        var quizDisc = document.getElementById("quizDisc").value;
-        
-        var labelSubject = document.getElementById("labelSubject").value;
-        var labelMedium = document.getElementById("labelMedium").value;
-        window.location.href = "/add?labelQuizName="+labelQuizName+"&labelQuizTopic="+labelQuizTopic+"&labelGrade="+labelGrade+"&labelSubGrde="+labelSubGrde+"&labelQuizShare="+"&labelMinute="+labelMinute+"&quizDisc="+quizDisc+"&labelSubject="+labelSubject+"&labelMedium="+labelMedium;
+  function preFillForms() {
 
-        //console.log("/add?labelQuizName="+labelQuizName+"&labelQuizTopic="+labelQuizTopic+"&labelGrade="+labelGrade+"&labelGrade="+labelSubGrde+"&labelSubGrde="+labelGrade+"&labelQuizShare="+labelQuizShare)
+  }
+
+  function SubmitFormQuiz() {
+    var chkdiv = document.getElementById('quizForm')
+    var chkflg = false
+    Array.from(chkdiv.querySelectorAll(".mandatory")).map(input => {
+      if (input.value == "") {
+        chkflg = true
+      }
+    })
+    if (labelGrade = document.getElementById("labelGrade").value == "") {
+
+      chkflg = true
+    }
+    if (chkflg) {
+
+      alert("Please fill the mandatory columns");
+      return false;
     }
 
+    var labelQuizName = document.getElementById("labelQuizName").value;
+    var labelQuizTopic = document.getElementById("labelQuizTopic").value;
+    var labelGrade = document.getElementById("labelGrade").value;
+    var labelSubGrde = document.getElementById("labelSubGrde").value;
+    var labelQuizShare = document.getElementById("labelQuizShare").value;
+    var labelMinute = document.getElementById("labelMinute").value;
+    var quizDisc = document.getElementById("quizDisc").value;
+
+    var labelSubject = document.getElementById("labelSubject").value;
+    var labelMedium = document.getElementById("labelMedium").value;
+    window.location.href = "/add?labelQuizName=" + labelQuizName + "&labelQuizTopic=" + labelQuizTopic + "&labelGrade=" + labelGrade + "&labelSubGrde=" + labelSubGrde + "&labelQuizShare=" + "&labelMinute=" + labelMinute + "&quizDisc=" + quizDisc + "&labelSubject=" + labelSubject + "&labelMedium=" + labelMedium;
+
+    //console.log("/add?labelQuizName="+labelQuizName+"&labelQuizTopic="+labelQuizTopic+"&labelGrade="+labelGrade+"&labelGrade="+labelSubGrde+"&labelSubGrde="+labelGrade+"&labelQuizShare="+labelQuizShare)
+  }
+  function EditQuiz() {
+    var chkdiv = document.getElementById('quizForm')
+    var chkflg = false
+    Array.from(chkdiv.querySelectorAll(".mandatory")).map(input => {
+      if (input.value == "") {
+        chkflg = true
+      }
+    })
+    if (labelGrade = document.getElementById("labelGrade").value == "") {
+
+      chkflg = true
+    }
+    if (chkflg) {
+
+      alert("Please fill the mandatory columns");
+      return false;
+    }
+
+    var labelQuizName = document.getElementById("labelQuizName").value;
+    var labelQuizTopic = document.getElementById("labelQuizTopic").value;
+    var labelGrade = document.getElementById("labelGrade").value;
+    var labelSubGrde = document.getElementById("labelSubGrde").value;
+    var labelQuizShare = document.getElementById("labelQuizShare").value;
+    var labelMinute = document.getElementById("labelMinute").value;
+    var quizDisc = document.getElementById("quizDisc").value;
+
+    var labelSubject = document.getElementById("labelSubject").value;
+    var labelMedium = document.getElementById("labelMedium").value;
+    window.location.href = "/add?labelQuizName=" + labelQuizName + "&labelQuizTopic=" + labelQuizTopic + "&labelGrade=" + labelGrade + "&labelSubGrde=" + labelSubGrde + "&labelQuizShare=" + "&labelMinute=" + labelMinute + "&quizDisc=" + quizDisc + "&labelSubject=" + labelSubject + "&labelMedium=" + labelMedium+ "&quizID=" + getParameterByName('quizID');
+
+    //console.log("/add?labelQuizName="+labelQuizName+"&labelQuizTopic="+labelQuizTopic+"&labelGrade="+labelGrade+"&labelGrade="+labelSubGrde+"&labelSubGrde="+labelGrade+"&labelQuizShare="+labelQuizShare)
+ 
+
+    
+ }
 </script>
 <div id="quizForm">
-<form onsubmit="SubmitFormQuiz()">
+  <form onload="preFillForms()">
     <div class="form-group">
       <label for="labelQuizName">Title *</label>
-      <input type="text" class="mandatory form-control" id="labelQuizName"  placeholder="Enter Quiz Name" required>
+      <input type="text" class="mandatory form-control" id="labelQuizName" placeholder="Enter Quiz Name" required>
     </div>
-      <script>
-function subgradeCreator(grade){
+    <script>
+      function subgradeCreator(grade) {
 
-  var div = document.getElementById("subgrades");
-  if (grade=="Grade 1-12"){
-div.innerHTML = '      <div class="form-group">\
+        var div = document.getElementById("subgrades");
+        if (grade == "Grade 1-12") {
+          div.innerHTML = '      <div class="form-group">\
         <label for="labelSubGrde:">Garde</label>\
         <select class="form-control form-select-lg mb-3" aria-label=".form-select-lg example"  id="labelSubGrde"  required>\
             <option value="other">Other</option>\
@@ -74,97 +123,138 @@ div.innerHTML = '      <div class="form-group">\
           </select> \
       </div>'
 
-  } else{
-div.innerHTML = '      <div class="form-group">\
+        } else {
+          div.innerHTML = '      <div class="form-group">\
         <input type="text" class="form-control" id="labelSubGrde"  placeholder="Type your Exam Name">\
       </div>'
 
-  }
- 
+        }
 
-}
 
-      </script>
+      }
+
+    </script>
     <div class="form-group">
-        
-        <select class="form-control form-select-lg mb-3" aria-label=".form-select-lg example"  id="labelGrade" onchange="subgradeCreator(this.value)" required>
-            <option value="">Select</option>
-            <option value="Grade 1-12">Grade 1-12</option>
-            <option value="Recruitment Exam">Recruitment Exam</option>
-            <option value="Entrance Exam">Entrance Exam</option>
-            <option value="Other">Other</option>
-          </select>  
+
+      <select class="form-control form-select-lg mb-3" aria-label=".form-select-lg example" id="labelGrade"
+        onchange="subgradeCreator(this.value)" required>
+        <option value="">Select</option>
+        <option value="Grade 1-12">Grade 1-12</option>
+        <option value="Recruitment Exam">Recruitment Exam</option>
+        <option value="Entrance Exam">Entrance Exam</option>
+        <option value="Other">Other</option>
+      </select>
     </div>
-    <div id = "subgrades">
-
-      </div>
-      <div class="form-group">
-        <label for="labelSubject">Subject</label>
-        <input type="text" class="form-control" id="labelSubject"  placeholder="Enter Subject">
-      </div>
-
-      <div class="form-group">
-        <label for="labelQuizTopic">Topic</label>
-        <input type="text" class="form-control" id="labelQuizTopic"  placeholder="Enter Quiz Topic" required>
-      </div>
-      <div class="form-group">
-        <label for="labelMedium">Medium * </label>
-        <input type="text" class="mandatory form-control" id="labelMedium"  placeholder="Enter Language Medium">
-      </div>
-      <div class="form-group">
-        <label for="labelTime">Time *</label>
-        <input type="text" class="mandatory form-control" id="labelMinute"  placeholder="Enter Minute" required>
-      </div>
-
-      <label for="labelTime">Discription *</label>
-     <textarea class="form-control" class="mandatory" id="quizDisc" name="quizDisc" rows="3" required></textarea>
-
-      <script>
-function inputfield() {
-  var checkBox = document.getElementById("cx");
-  var div = document.getElementById("emails");
-  if (checkBox.checked == true){
-    div.style.display = "";
-  } else {
-    div.style.display = "none";
-  }
-} 
-
-      </script>
-      <div class="form-group">
-        <label for="labelQuizShare">Share Quiz</label>
-        <div class="public-private-toggle">
-            Public
-            <span class="ios-toggle">
-              <input type="checkbox" id="cx" onclick="inputfield()">
-              <label for="cx"></label>
-            </span>
-            Private 
-        </div>
-    </br>
-    <div id = "emails" style="display:none">
-
-        <input type="text" class="form-control" id="labelQuizShare"  placeholder="Enter Emails: abc@gmail.com,def@gmail.com ...">
-        <small id="emailHelp" class="form-text text-muted">Leave it empty to share with everyone. Else fill it as (abc@gmail.com,def@gmail.com ...)</small>
+    <div id="subgrades">
 
     </div>
+    <div class="form-group">
+      <label for="labelSubject">Subject</label>
+      <input type="text" class="form-control" id="labelSubject" placeholder="Enter Subject">
+    </div>
+
+    <div class="form-group">
+      <label for="labelQuizTopic">Topic</label>
+      <input type="text" class="form-control" id="labelQuizTopic" placeholder="Enter Quiz Topic" required>
+    </div>
+    <div class="form-group">
+      <label for="labelMedium">Medium * </label>
+      <input type="text" class="mandatory form-control" id="labelMedium" placeholder="Enter Language Medium">
+    </div>
+    <div class="form-group">
+      <label for="labelTime">Time *</label>
+      <input type="text" class="mandatory form-control" id="labelMinute" placeholder="Enter Minute" required>
+    </div>
+
+    <label for="labelTime">Discription *</label>
+    <textarea class="form-control" class="mandatory" id="quizDisc" name="quizDisc" rows="3" required></textarea>
+
+    <script>
+      function inputfield() {
+        var checkBox = document.getElementById("cx");
+        var div = document.getElementById("emails");
+        if (checkBox.checked == true) {
+          div.style.display = "";
+        } else {
+          div.style.display = "none";
+        }
+      }
+
+    </script>
+    <div class="form-group">
+      <label for="labelQuizShare">Share Quiz</label>
+      <div class="public-private-toggle">
+        Public
+        <span class="ios-toggle">
+          <input type="checkbox" id="cx" onclick="inputfield()">
+          <label for="cx"></label>
+        </span>
+        Private
       </div>
-      <small id="emailHelp" class="form-text text-muted">* Mandatory Inputs</small>
-    <button type="button" class="btn btn-primary" onclick="SubmitFormQuiz()">Submit</button>
+      </br>
+      <div id="emails" style="display:none">
+
+        <input type="text" class="form-control" id="labelQuizShare"
+          placeholder="Enter Emails: abc@gmail.com,def@gmail.com ...">
+        <small id="emailHelp" class="form-text text-muted">Leave it empty to share with everyone. Else fill it as
+          (abc@gmail.com,def@gmail.com ...)</small>
+
+      </div>
+    </div>
+    <small id="emailHelp" class="form-text text-muted">* Mandatory Inputs</small>
+    <div id="submitQuiz" style="display:block">
+    <button type="button" class="btn btn-primary" id="submitQuiz" onclick="SubmitFormQuiz()">Submit</button> 
+  </div>  
+  </br>
+    <div id="editQuiz" style="display:none">
+      <button type="button" class="btn btn-warning" id="submitQuiz" onclick="EditQuiz()">Edit Questions</button>
+    </div>  
+    
   </form>
 </div>
+<script>
 
-    
+
+    var quizID = getParameterByName('quizID');
+    if ( quizID != null  ) {
+      document.getElementById("submitQuiz").disabled = true; 
+      var div = document.getElementById("editQuiz")
+      div.style.display = "block"
+      var div = document.getElementById("submitQuiz")
+      div.style.display = "none"
+
+
+      document.getElementById("labelQuizName").value = getParameterByName('labelQuizName');
+    document.getElementById("labelQuizTopic").value =  getParameterByName('labelQuizTopic');
+    document.getElementById("labelGrade").value =  getParameterByName('labelGrade');
+    subgradeCreator(getParameterByName('labelGrade'))
+    document.getElementById("labelSubGrde").value = getParameterByName('labelSubGrde');
+    document.getElementById("labelQuizShare").value = getParameterByName('labelQuizShare');
+    document.getElementById("quizDisc").value = getParameterByName('quizDisc');
+    document.getElementById("labelSubject").value = getParameterByName('labelSubject');
+    document.getElementById("labelMedium").value = getParameterByName('labelMedium');
+    document.getElementById("labelMinute").value = getParameterByName('labelMinute');
+      fetch('../static/Quizes/chekoduadarsh_1.json')
+    .then((response) => response.json())
+    .then((quizes) => {
+      var quiz = quizes[quizID]
+
+    });
+    }
+
+  
+</script>
+
+
 {% endblock %}
 
 
 {% block navbar%}
 <li class="nav-item">
-<li class="nav-item">
-    <a href="/register" class="nav-link">
-        <p>
-            Register
-        </p>
-    </a>
+  <a href="/profile" class="nav-link">
+    <p>
+      Profile
+    </p>
+  </a>
 </li>
 {% endblock %}
