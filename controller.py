@@ -183,6 +183,7 @@ def showll():
     return render_template("showall.html" , list= objects_list)
 
 
+
 @app.route("/addquestion" , methods=["POST","GET"])
 def add_question():
     inp = dict(request.form)
@@ -190,6 +191,64 @@ def add_question():
     #write to json
     with open('static/Quizes/chekoduadarsh_1.json', "r") as file:
         fdata = json.load(file)
+    if(inp["quizID"] != "None"):
+
+        for idx, obj in enumerate(fdata):
+            if obj['quizID'] == inp["quizID"]:
+                fdata.pop(idx)
+
+
+
+        data = {"quizName": inp["labelQuizName"],
+            "grade": inp["labelGrade"],
+            "quizID": "0"if len(fdata)== 0 else str(int(fdata[len(fdata)-1]["quizID"])+1),
+            "subGrade": inp["labelSubGrde"],
+            "topic": inp["labelQuizTopic"],
+            "quizDisc": inp["quizDisc"],
+            "quizHour": "0",
+            "quizMinutes": inp["labelMinute"],
+            "quizSubject": inp["labelSubject"],
+            "quizMedium": inp["labelMedium"],
+            "quizOwner": inp["owner"],
+            "quizTarget": ["all"] if inp["labelQuizShare"] == "" else inp["labelQuizShare"].split(",")}
+
+
+        questions = []
+        qids = []
+
+        for x in inp:
+            if 'question' in  x:
+                qids.append(str(x[-1]))
+
+        for qid in qids:
+            question = {}
+            question["question"] = inp['question'+qid]
+            question["score"] = inp['q'+qid+'Score']
+            question["selected"] = []
+            options = []
+            correct = []
+            for x in inp:
+                if "q"+qid in x:
+                    if 'q'+qid+'op' in x:
+                        options.append(inp[x])
+                    
+                    if 'q'+qid+'answer' in x:
+                        correct.append(inp['q'+qid+'op'+x[-1]])
+
+            question["options"] = options
+            question["correctAnswer"] = correct
+
+            questions.append(question)
+
+            print(questions)
+
+        data["questions"] = questions  
+        fdata.append(data)
+        # 3. Write json file
+        with open('static/Quizes/chekoduadarsh_1.json', "w") as file:
+            json.dump(fdata, file) 
+        return render_template("profile.html")
+
     data = {"quizName": inp["labelQuizName"],
             "grade": inp["labelGrade"],
             "quizID": "0"if len(fdata)== 0 else str(int(fdata[len(fdata)-1]["quizID"])+1),
@@ -362,7 +421,8 @@ def add():
     quizDisc = request.args.get('quizDisc')
     labelSubject = request.args.get('labelSubject')
     labelMedium = request.args.get('labelMedium')
-    return render_template("addques.html",labelQuizName=labelQuizName,labelQuizTopic=labelQuizTopic,labelGrade=labelGrade,labelSubGrde=labelSubGrde,labelQuizShare=labelQuizShare, labelMinute=labelMinute,quizDisc=quizDisc, labelMedium=labelMedium,labelSubject=labelSubject)
+    quizID = request.args.get('quizID')
+    return render_template("addques.html",labelQuizName=labelQuizName,labelQuizTopic=labelQuizTopic,labelGrade=labelGrade,labelSubGrde=labelSubGrde,labelQuizShare=labelQuizShare, labelMinute=labelMinute,quizDisc=quizDisc, labelMedium=labelMedium,quizID=quizID)
 
 @app.route("/profile" , methods=["POST","GET"])
 def profile():
